@@ -29,4 +29,3 @@ function operate(num1, num2, operator) {
     }
 }
 
-alert(operate(1,2,"+"));
