@@ -58,10 +58,10 @@ numButtons.forEach((btn) => {
         }
 
         if (operator == "" && num1.length < 12) {
-            num1 = num1 + e.target.value;  
+            num1 = num1 == "0" ? e.target.value : num1 + e.target.value;
             updateBottomDisplay(num1);
         } else if (num2.length < 12) {
-            num2 = num2 + e.target.value;  
+            num2 = num2 == "0" ? e.target.value : num2 + e.target.value;
             updateBottomDisplay(num2);
         }
 
@@ -81,6 +81,9 @@ operatorButtons.forEach((btn) => {
             updateTopDisplay(`${num1} ${e.target.value}`);
             updateBottomDisplay("");
         } else {
+            if (checkZeroDivision() == true) {
+                return;
+            }
             num1 = operate(num1, num2, operator);
             num2 = ""
             operator = e.target.value;
@@ -94,6 +97,9 @@ operatorButtons.forEach((btn) => {
 let equalButton = document.querySelector(".calculator__btn--equal");
 equalButton.addEventListener("click", () => {
     if (num2) {
+        if (checkZeroDivision() == true) {
+            return;
+        }
         num1 = operate(num1, num2, operator);
         updateBottomDisplay(num1);
         updateTopDisplay("");
@@ -111,7 +117,17 @@ clearButton.addEventListener("click", () => {
     operator = ""
 });
 
-
+function checkZeroDivision(){
+    if (num1 == "0" && operator == "/" && num2) {
+        num1 = "";
+        num2 = "";
+        operator = "";
+        updateTopDisplay("");
+        updateBottomDisplay("ZERO DIVISION");
+        return true;
+    }
+    return false;
+}
 
 
 
