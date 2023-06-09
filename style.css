@@ -26,10 +26,14 @@ body {
 
 .calculator__display__top {
     font-size: 1.4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .calculator__display__bottom {
     font-size: 3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .calculator__btn--2 {

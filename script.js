@@ -1,17 +1,17 @@
 function add(a, b) {
-    return parseInt(a) + parseInt(b);
+    return parseFloat(a) + parseFloat(b);
 }
 
 function subtract(a, b) {
-    return parseInt(a) - parseInt(b);
+    return parseFloat(a) - parseFloat(b);
 }
 
 function multiply(a, b) {
-    return parseInt(a) * parseInt(b);
+    return parseFloat(a) * parseFloat(b);
 }
 
 function divide(a, b) {
-    return parseInt(a) / parseInt(b);
+    return parseFloat(a) / parseFloat(b);
 }
 
 function operate(num1, num2, operator) {
@@ -28,9 +28,6 @@ function operate(num1, num2, operator) {
             return "ERROR"
     }
 }
-
-
-
 
 let num1 = "";
 let num2 = "";
@@ -49,6 +46,17 @@ function updateTopDisplay(string) {
 let numButtons = document.querySelectorAll(".calculator__btn--num");
 numButtons.forEach((btn) => {
     btn.addEventListener("click", (e) => {
+        if (e.target.value == ".") {
+            if (operator == "" && !(/[.]/.test(num1) && num1.length > 1)) {
+                num1 = num1 + ".";
+                updateBottomDisplay(num1);
+            } else if (!(/[.]/.test(num2)) && num2.length > 1) {
+                num2 = num2 + ".";
+                updateBottomDisplay(num2);
+            }
+            return;
+        }
+
         if (operator == "" && num1.length < 12) {
             num1 = num1 + e.target.value;  
             updateBottomDisplay(num1);
@@ -86,10 +94,9 @@ operatorButtons.forEach((btn) => {
 let equalButton = document.querySelector(".calculator__btn--equal");
 equalButton.addEventListener("click", () => {
     if (num2) {
-        let result = operate(num1, num2, operator);
-        updateBottomDisplay(result);
+        num1 = operate(num1, num2, operator);
+        updateBottomDisplay(num1);
         updateTopDisplay("");
-        num1 = ""
         num2 = ""
         operator = ""
     }
